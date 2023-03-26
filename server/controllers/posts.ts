@@ -1,8 +1,8 @@
-import Post from "../models/Post.js";
-import User from "../models/User.js";
-import Comment from "../models/Comment.js";
-import { ErrorAction } from "../responses/ErrorAction.js";
-import { SuccessfulAction } from "../responses/SuccessfulAction.js";
+import Post from "../models/Post.ts";
+import User from "../models/User.ts";
+import Comment from "../models/Comment.ts";
+import { ErrorAction } from "../responses/ErrorAction.ts";
+import { SuccessfulAction } from "../responses/SuccessfulAction.ts";
 import { Request, Response } from "express";
 
 /* CREATE */

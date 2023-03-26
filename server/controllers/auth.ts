@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User, { IUser } from "../models/User.js";
-import { ErrorAction } from "../responses/ErrorAction.js";
-import { SuccessfulAction } from "../responses/SuccessfulAction.js";
-import { TypedRequestBody, TypedRequestBodyWithUser } from "../types/index.js";
+import User, { IUser } from "../models/User.ts";
+import { ErrorAction } from "../responses/ErrorAction.ts";
+import { SuccessfulAction } from "../responses/SuccessfulAction.ts";
+import { TypedRequestBody, TypedRequestBodyWithUser } from "../types/index.ts";
 import { Request, Response } from "express";
 
 /* REGISTER USER */

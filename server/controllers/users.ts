@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User from "../models/User.js";
-import { ErrorAction } from "../responses/ErrorAction.js";
-import { SuccessfulAction } from "../responses/SuccessfulAction.js";
+import User from "../models/User.ts";
+import { ErrorAction } from "../responses/ErrorAction.ts";
+import { SuccessfulAction } from "../responses/SuccessfulAction.ts";
 /* READ */
 export const getUser = async (req: Request, res: Response) => {
 	try {

@@ -6,8 +6,8 @@ import {
 	commentPost,
 	deleteComment,
 	deletePost,
-} from "../controllers/posts.js";
-import { verifyToken } from "../middleware/auth.js";
+} from "../controllers/posts.ts";
+import { verifyToken } from "../middleware/auth.ts";
 
 const router = express.Router();
 

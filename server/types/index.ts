@@ -1,6 +1,5 @@
 import { Request } from "express";
-import { IUser } from "../models/User.js";
-import { JwtPayload } from "jsonwebtoken";
+import { IUser } from "../models/User.ts";
 import { Types } from "mongoose";
 
 export interface TypedRequestBody<T> extends Request {

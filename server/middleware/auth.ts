@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { ErrorAction } from "../responses/ErrorAction.js";
+import { ErrorAction } from "../responses/ErrorAction.ts";
 import { NextFunction, Request, Response } from "express";
-import { IDocUser } from "../types/index.js";
+import { IDocUser } from "../types/index.ts";
 
 export const verifyToken = async (
 	req: Request,
