@@ -1,7 +1,13 @@
 import jwt from "jsonwebtoken";
 import { ErrorAction } from "../responses/ErrorAction.js";
+import { NextFunction, Request, Response } from "express";
+import { IDocUser } from "../types/index.js";
 
-export const verifyToken = async (req, res, next) => {
+export const verifyToken = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	try {
 		let token = req.header("Authorization");
 
@@ -14,7 +20,7 @@ export const verifyToken = async (req, res, next) => {
 		}
 
 		const verified = jwt.verify(token, process.env.JWT_SECRET);
-		req.user = verified;
+		req.user = verified as IDocUser;
 		next();
 	} catch (err) {
 		res.status(500).json(new ErrorAction(err.message));

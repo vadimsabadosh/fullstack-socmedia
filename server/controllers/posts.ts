@@ -3,11 +3,17 @@ import User from "../models/User.js";
 import Comment from "../models/Comment.js";
 import { ErrorAction } from "../responses/ErrorAction.js";
 import { SuccessfulAction } from "../responses/SuccessfulAction.js";
+import { Request, Response } from "express";
+
 /* CREATE */
-export const createPost = async (req, res) => {
+export const createPost = async (req: Request, res: Response) => {
 	try {
 		const { userId, description, picturePath } = req.body;
 		const user = await User.findById(userId);
+
+		if (!user)
+			return res.status(400).json(new ErrorAction("User does not exist. "));
+
 		const newPost = new Post({
 			userId,
 			firstName: user.firstName,
@@ -29,7 +35,7 @@ export const createPost = async (req, res) => {
 };
 
 /* READ */
-export const getFeedPosts = async (req, res) => {
+export const getFeedPosts = async (req: Request, res: Response) => {
 	try {
 		const post = await Post.find().sort({ createdAt: -1 }).populate("comments");
 		res.status(200).json(new SuccessfulAction(post));
@@ -38,7 +44,7 @@ export const getFeedPosts = async (req, res) => {
 	}
 };
 
-export const getUserPosts = async (req, res) => {
+export const getUserPosts = async (req: Request, res: Response) => {
 	try {
 		const { userId } = req.params;
 		const post = await Post.find({ userId }).populate("comments");
@@ -49,11 +55,14 @@ export const getUserPosts = async (req, res) => {
 };
 
 /* UPDATE */
-export const likePost = async (req, res) => {
+export const likePost = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
 		const { userId } = req.body;
 		const post = await Post.findById(id);
+
+		if (!post)
+			return res.status(400).json(new ErrorAction("Post does not exist. "));
 		const isLiked = post.likes.get(userId);
 
 		if (isLiked) {
@@ -75,7 +84,7 @@ export const likePost = async (req, res) => {
 };
 
 /* ADD COMMENT */
-export const commentPost = async (req, res) => {
+export const commentPost = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
 		const userId = req.user._id;
@@ -95,19 +104,19 @@ export const commentPost = async (req, res) => {
 };
 
 /* DELETE COMMENT */
-export const deleteComment = async (req, res) => {
+export const deleteComment = async (req: Request, res: Response) => {
 	try {
 		const { postId, commentId } = req.params;
 		const userId = req.user._id;
 
 		const comment = await Comment.findById(commentId);
 
-		if (comment.authorId !== userId) {
-			return res.status(401).json(new ErrorAction("Action is not authorized"));
-		}
-
 		if (!comment) {
 			return res.status(404).json(new ErrorAction("Comment does not exist"));
+		}
+
+		if (comment.authorId !== userId.toString()) {
+			return res.status(401).json(new ErrorAction("Action is not authorized"));
 		}
 		comment.remove();
 		await Post.findByIdAndUpdate(
@@ -125,12 +134,17 @@ export const deleteComment = async (req, res) => {
 };
 
 /* DELETE POST */
-export const deletePost = async (req, res) => {
+export const deletePost = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
 		const userId = req.user._id;
 		const post = await Post.findById(id);
-		if (post.userId !== userId) {
+
+		if (!post) {
+			return res.status(404).json(new ErrorAction("Post does not exist"));
+		}
+
+		if (post.userId !== userId.toString()) {
 			return res.status(401).json(new ErrorAction("Action is not authorized"));
 		}
 		post.remove();

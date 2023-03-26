@@ -1,6 +1,18 @@
-import mongoose from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
-const postSchema = mongoose.Schema(
+interface IPost {
+	comments: Types.ObjectId[];
+	userId: string;
+	firstName: string;
+	lastName: string;
+	location: string;
+	description: string;
+	userPicturePath: string;
+	picturePath: string;
+	likes: Map<Types.ObjectId, boolean>;
+}
+
+const postSchema = new Schema<IPost>(
 	{
 		userId: {
 			type: String,
@@ -24,7 +36,7 @@ const postSchema = mongoose.Schema(
 		},
 		comments: [
 			{
-				type: mongoose.Schema.Types.ObjectId,
+				type: Schema.Types.ObjectId,
 				ref: "Comment",
 			},
 		],
@@ -32,6 +44,6 @@ const postSchema = mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = model("Post", postSchema);
 
 export default Post;
