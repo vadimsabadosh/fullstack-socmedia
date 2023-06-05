@@ -17,14 +17,14 @@ import { verifyToken } from "./middleware/auth.ts";
 import { myDataSource } from "./config/app-data-source.ts";
 
 // establish database connection
-myDataSource
-	.initialize()
-	.then(() => {
-		console.log("Data Source has been initialized!");
-	})
-	.catch((err) => {
-		console.error("Error during Data Source initialization:", err);
-	});
+// myDataSource
+// 	.initialize()
+// 	.then(() => {
+// 		console.log("Data Source has been initialized!");
+// 	})
+// 	.catch((err) => {
+// 		console.error("Error during Data Source initialization:", err);
+// 	});
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
