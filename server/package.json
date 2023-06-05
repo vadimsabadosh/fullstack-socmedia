@@ -17,12 +17,16 @@
 		"morgan": "^1.10.0",
 		"multer": "^1.4.5-lts.1",
 		"nodemon": "^2.0.20",
-		"ts-node": "^10.9.1"
+		"reflect-metadata": "^0.1.13",
+		"ts-node": "^10.9.1",
+		"typeorm": "^0.3.12"
 	},
 	"scripts": {
 		"build": "npx tsc",
 		"start": "node build/index.js",
-		"dev": "concurrently --raw \"npx tsc --watch\" \"nodemon -q build/index.js\""
+		"dev": "concurrently --raw \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+		"migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+		"migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:rever"
 	},
 	"keywords": [],
 	"author": "",

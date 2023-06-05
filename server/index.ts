@@ -8,12 +8,23 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import postRoutes from "./routes/posts.js";
-import { register } from "./controllers/auth.js";
-import { createPost } from "./controllers/posts.js";
-import { verifyToken } from "./middleware/auth.js";
+import authRoutes from "./routes/auth.ts";
+import userRoutes from "./routes/users.ts";
+import postRoutes from "./routes/posts.ts";
+import { register } from "./controllers/auth.ts";
+import { createPost } from "./controllers/posts.ts";
+import { verifyToken } from "./middleware/auth.ts";
+import { myDataSource } from "./config/app-data-source.ts";
+
+// establish database connection
+myDataSource
+	.initialize()
+	.then(() => {
+		console.log("Data Source has been initialized!");
+	})
+	.catch((err) => {
+		console.error("Error during Data Source initialization:", err);
+	});
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
